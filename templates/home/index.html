@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{%load static %}
+{% load thumbnail %}
 {% block title %}
     Welcome To Vikramshila - Home
 {% endblock %}
@@ -19,143 +21,32 @@
     <h1 class="text-center m-3">All Categories</h1>
 
     <div class="row mb-2">
-        <div class="col-md-6">
-            <div
-                class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">vikramshila</strong>
-                    <h3 class="mb-0">Jobs</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">Small Description Lorem ipsum dolor sit amet, consectetur
-                        adipisicing
-                        elit. Enim, pariatur?
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-secondary mt-2" href="about/" role="button">Explore »</a>
-                    </p>
-                </div>
-                <div class="col-md-4 d-none d-lg-block">
-                    <img style="height: 100%;"
-                        src="https://www.codewithharry.com/_next/image/?url=https%3A%2F%2Fcodewithharry.nyc3.cdn.digitaloceanspaces.com%2Fassets%2Fe1c843acc10c59c60504cd438a082c6d.png&w=384&q=75"
-                        class="img-fluid rounded-start" alt="loading...">
-                </div>
-            </div>
-        </div>
 
-        <div class="col-md-6">
-            <div
-                class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">vikramshila</strong>
-                    <h3 class="mb-0">Jobs</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">Small Description Lorem ipsum dolor sit amet, consectetur
-                        adipisicing
-                        elit. Enim, pariatur?
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-secondary mt-2" href="about/" role="button">Explore »</a>
-                    </p>
+        {% for category in categories %}
+        <form action="/{{ category.slug }}/" method="post" class="col-md-6">
+            {% csrf_token %} 
+            <input type="hidden" name="category" value="{{category.title}}">
+            <input type="hidden" name="description" value="{{category.description}}">
+                <div
+                    class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success">vikramshila</strong>
+                        <h3 class="mb-0">{{category.title}}</h3>
+                        <div class="mb-1 text-muted">{{category.datetime}}</div>
+                            <p class="card-text mb-auto">{{category.description|slice:":100"}}...
+                        </p>
+                        <p>
+                            <button class="btn btn-danger mt-2" >Explore »</button>
+                        </p>
+                    </div>
+                    <div class="col-md-4 d-none d-lg-block">
+                        {% thumbnail category.image "200x200" as im %}
+                            <img src="{{ im.url }}" style="width: 100%;height: 100%;">
+                        {% endthumbnail %}
+                    </div>
                 </div>
-                <div class="col-md-4 d-none d-lg-block">
-                    <img style="height: 100%;"
-                        src="https://www.codewithharry.com/_next/image/?url=https%3A%2F%2Fcodewithharry.nyc3.cdn.digitaloceanspaces.com%2Fassets%2Fe1c843acc10c59c60504cd438a082c6d.png&w=384&q=75"
-                        class="img-fluid rounded-start" alt="loading...">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div
-                class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">vikramshila</strong>
-                    <h3 class="mb-0">Jobs</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">Small Description Lorem ipsum dolor sit amet, consectetur
-                        adipisicing
-                        elit. Enim, pariatur?
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-secondary mt-2" href="about/" role="button">Explore »</a>
-                    </p>
-                </div>
-                <div class="col-md-4 d-none d-lg-block">
-                    <img style="height: 100%;"
-                        src="https://www.codewithharry.com/_next/image/?url=https%3A%2F%2Fcodewithharry.nyc3.cdn.digitaloceanspaces.com%2Fassets%2Fe1c843acc10c59c60504cd438a082c6d.png&w=384&q=75"
-                        class="img-fluid rounded-start" alt="loading...">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div
-                class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">vikramshila</strong>
-                    <h3 class="mb-0">Jobs</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">Small Description Lorem ipsum dolor sit amet, consectetur
-                        adipisicing
-                        elit. Enim, pariatur?
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-secondary mt-2" href="about/" role="button">Explore »</a>
-                    </p>
-                </div>
-                <div class="col-md-4 d-none d-lg-block">
-                    <img style="height: 100%;"
-                        src="https://www.codewithharry.com/_next/image/?url=https%3A%2F%2Fcodewithharry.nyc3.cdn.digitaloceanspaces.com%2Fassets%2Fe1c843acc10c59c60504cd438a082c6d.png&w=384&q=75"
-                        class="img-fluid rounded-start" alt="loading...">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div
-                class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">vikramshila</strong>
-                    <h3 class="mb-0">Jobs</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">Small Description Lorem ipsum dolor sit amet, consectetur
-                        adipisicing
-                        elit. Enim, pariatur?
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-secondary mt-2" href="about/" role="button">Explore »</a>
-                    </p>
-                </div>
-                <div class="col-md-4 d-none d-lg-block">
-                    <img style="height: 100%;"
-                        src="https://www.codewithharry.com/_next/image/?url=https%3A%2F%2Fcodewithharry.nyc3.cdn.digitaloceanspaces.com%2Fassets%2Fe1c843acc10c59c60504cd438a082c6d.png&w=384&q=75"
-                        class="img-fluid rounded-start" alt="loading...">
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <div
-                class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                <div class="col p-4 d-flex flex-column position-static">
-                    <strong class="d-inline-block mb-2 text-primary">vikramshila</strong>
-                    <h3 class="mb-0">Jobs</h3>
-                    <div class="mb-1 text-muted">Nov 12</div>
-                    <p class="card-text mb-auto">Small Description Lorem ipsum dolor sit amet, consectetur
-                        adipisicing
-                        elit. Enim, pariatur?
-                    </p>
-                    <p>
-                        <a class="btn btn-outline-secondary mt-2" href="about/" role="button">Explore »</a>
-                    </p>
-                </div>
-                <div class="col-md-4 d-none d-lg-block">
-                    <img style="height: 100%;"
-                        src="https://www.codewithharry.com/_next/image/?url=https%3A%2F%2Fcodewithharry.nyc3.cdn.digitaloceanspaces.com%2Fassets%2Fe1c843acc10c59c60504cd438a082c6d.png&w=384&q=75"
-                        class="img-fluid rounded-start" alt="loading...">
-                </div>
-            </div>
-        </div>
+        </form>
+        {% endfor %}
 
 
     </div>

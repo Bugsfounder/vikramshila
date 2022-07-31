@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<main class="container my-3" style="height:100%;">
+    <div style="margin-top: 85px; height:100%;">
+        <h1 class="my-5">{{params.msg}}</h1>
+        {% for result in results %}
+                <form class="card mb-3" action="/{{result.slug}}/" method="post">
+                    {% csrf_token %}
+                    <div>
+                        <div>
+                            <div class="card-body">
+                                <h3 class="card-title text-success">{{result.title}}</h3>
+                                <p class="card-text">{{result.description}}</p>
+                                <p class="card-text"><small class=" text-primary">Last Update at {{result.datetime}}</small></p>
+                            </div>
+                            <p>
+                                <button class="btn btn-success mt-2 mx-3">Explore »</button>
+                            </p>
+                        </div> 
+                     </div>
+                </form>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

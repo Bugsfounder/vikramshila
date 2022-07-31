@@ -1,10 +1,49 @@
-{% load socialaccount %}
 {% extends 'base.html' %}
+{% load static %}
+{% load thumbnail %}
 {% block title %}
-    All Item of a Particular Category that you choose
+Available {{category}} - Vikramshila
 {% endblock %}
 
 {% block body %}
 
+<main class="container my-3" style="height:100vh;">
+    <div style="margin-top: 85px; height:100%;">
+        <h1 class="text-center m-3">All Available {{category}}</h1>
+        <p class="text-center m-3">{{desc}}</p>
+        <hr>
+        {% if allItems|length %}
+        <div class="row mb-2">
+            {% for category in allItems %}
+            <form action="/{{ category.slug }}/" method="post" class="col-md-6">
+                {% csrf_token %}
+                <input type="hidden" name="category" value="{{category.title}}">
+                <div
+                    class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block mb-2 text-success">vikramshila</strong>
+                        <h3 class="mb-0">{{category.title}}</h3>
+                        <div class="mb-1 text-muted">{{category.datetime}}</div>
+                        <p class="card-text mb-auto">{{category.description|slice:":100"}}...
+                        </p>
+                        <p>
+                            <button class="btn btn-danger mt-2">Explore »</button>
+                        </p>
+                    </div>
+                    <div class="col-md-4 d-none d-lg-block">
+                        {% thumbnail category.image "200x200" as im %}
+                        <img src="{{ im.url }}" style="width: 100%;height: 100%;">
+                        {% endthumbnail %}
+                    </div>
+                </div>
+            </form>
+            {% endfor %}
+                
+            {% else %}
+            <h1 class="text-center m-3">No Available {{category}} for Now</h1>
+        </div>
+        {% endif %}
 
+    </div>
+</main>
 {% endblock %}

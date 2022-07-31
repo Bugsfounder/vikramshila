@@ -23,13 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include("home.urls"), name="home"),
-    path('about/', include("about.urls"), name="about"),
-    path('contact/', include('contact.urls'), name="contact"),
-    path('services/', include('service.urls'), name="service"),
-    path('products/', include('product.urls'), name="product"),
-    path('auth/', include('userAuth.urls'), name="auth"),
-    path('jobs/', include('jobs.urls'), name="jobs")
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('auth/', include("userAuth.urls"), name="home"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler500 = 'errors.views.error_500' # implement later
-handler404 = 'errors.views.error_404' # implement later
+handler500 = 'errors.views.error_500' 
+handler404 = 'errors.views.error_404'

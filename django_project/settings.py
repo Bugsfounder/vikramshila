@@ -34,6 +34,7 @@ X_FRAME_OPTIONS = '*'
 # Application definition
 
 INSTALLED_APPS = [
+    'sorl.thumbnail',
     'django.contrib.admin', 
     'django.contrib.auth',
     'django.contrib.sites',
@@ -43,9 +44,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    'userAuth.apps.UserauthConfig', 'contact.apps.ContactConfig',
-    'home.apps.HomeConfig', 'jobs.apps.JobsConfig',
-    "product.apps.ProductConfig", 'service.apps.ServiceConfig',
+    'userAuth.apps.UserauthConfig', 
+    'home.apps.HomeConfig', 
     'errors.apps.ErrorsConfig'
 
 ]
@@ -154,9 +154,11 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 
-MEDIA_URL = 'media/'
+MEDIA_URL = '/media/'
 MEDIA_URL = os.path.join(BASE_DIR, '/media/')
-
+MEDIAFILES_DIRS = [
+    BASE_DIR / 'media'
+]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
