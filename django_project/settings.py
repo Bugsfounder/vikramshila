@@ -34,17 +34,24 @@ X_FRAME_OPTIONS = '*'
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin', 'django.contrib.auth',
+    'django.contrib.admin', 
+    'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes', 'django.contrib.sessions',
     'django.contrib.messages', 'django.contrib.staticfiles',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'userAuth.apps.UserauthConfig', 'contact.apps.ContactConfig',
     'home.apps.HomeConfig', 'jobs.apps.JobsConfig',
     "product.apps.ProductConfig", 'service.apps.ServiceConfig',
     'errors.apps.ErrorsConfig'
+
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -138,8 +145,46 @@ MEDIA_ROOT=BASE_DIR / 'media'
 STATICFILES_DIRS = [BASE_DIR / 'static/']
 STATIC_ROOT = os.path.join(BASE_DIR, "/static/")
 
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_USE_FINDERS = True
 
 MEDIA_URL = 'media/'
 MEDIA_URL = os.path.join(BASE_DIR, '/media/')
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+SITE_ID = 1
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Additional configuration settings
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True

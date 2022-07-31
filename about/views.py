@@ -4,8 +4,8 @@ from django.http import JsonResponse
 
 # Create your views here.
 def about(request):
-    return HttpResponse("this is about page")
+    return render(request, "about/aboutwebsite.html")
 
 
 def author(request):
-    return HttpResponse("this is about author page")
+    return render(request, "about/aboutauthor.html")
