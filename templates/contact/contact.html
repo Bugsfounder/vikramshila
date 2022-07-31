@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Contact Us - Vikramshila
+{% endblock %}
+
+{% block body %}
+<section class="vh-100">
+    <div class="container-fluid h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+            <h1 class="text-center">Contact Us</h1>
+          <form method="post", action="/contact/">
+            {% csrf_token %} 
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form1Example13">Username</label>
+              <input type="text" id="username" name="username" class="form-control form-control-lg" />
+            </div>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form1Example13">Email address</label>
+              <input type="email" id="email" name="email"class="form-control form-control-lg" />
+            </div>
+
+            <!-- phone input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form1Example23">Phone</label>
+              <input type="number" id="phone" name="phone" class="form-control form-control-lg" />
+            </div>
+  
+            <div class="mb-3">
+                <label for="description" class="form-label">Purpose</label>
+                <textarea class="form-control" name="description" id="description" minlength="100" maxlength="1000" rows="3" required></textarea>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-md-8 col-lg-7 col-xl-6">
+            <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" -->
+            <img src="{% static 'images/draw2.svg' %}" class="img-fluid" alt="Sample image">
+          </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
