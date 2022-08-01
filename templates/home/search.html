@@ -10,12 +10,14 @@
                     <div>
                         <div>
                             <div class="card-body">
+                                <strong class="d-inline-block mb-2 text-primary">{{result.category.title}} - {{result.categoryItem.title}}</strong>
                                 <h3 class="card-title text-success">{{result.title}}</h3>
                                 <p class="card-text">{{result.description}}</p>
                                 <p class="card-text"><small class=" text-primary">Last Update at {{result.datetime}}</small></p>
                             </div>
                             <p>
                                 <button class="btn btn-outline-success mt-2 mx-3">Contact: {{result.contact}}</button>
+                                <a href="/products/{{result.id}}"><button id="qv{{result.id}}" class="btn btn-danger mt-2 mx-2">Quick View</button></a>
                             </p>
                         </div> 
                      </div>
