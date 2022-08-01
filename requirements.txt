@@ -79,4 +79,4 @@ whitenoise==6.2.0
 yapf==0.31.0
 yarg==0.1.9
 zipp==3.4.1
-setuptools==0.7.3
+setuptools==1.0
