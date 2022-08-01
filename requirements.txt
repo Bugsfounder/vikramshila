@@ -17,6 +17,7 @@ defusedxml==0.7.1
 distlib==0.3.3
 Django==4.0.6
 django-allauth==0.51.0
+django-sms==0.5.0
 docopt==0.6.2
 filelock==3.3.2
 future==0.18.2
@@ -36,6 +37,7 @@ oauthlib==3.2.0
 packaging==20.9
 parso==0.5.2
 pastel==0.2.1
+paytm==0.1.8
 pexpect==4.8.0
 Pillow==9.2.0
 pipreqs-amasad==0.4.10
@@ -46,6 +48,7 @@ poetry==1.1.11
 poetry-core==1.0.7
 ptyprocess==0.7.0
 pycparser==2.21
+pycrypto==2.6.1
 pyflakes==2.1.1
 PyGoogleVoice==0.5.2
 PyJWT==2.4.0
@@ -62,6 +65,7 @@ rope==0.18.0
 SecretStorage==3.3.1
 shellingham==1.4.0
 six==1.16.0
+sorl-thumbnail==12.8.0
 sqlparse==0.4.2
 toml==0.10.2
 tomlkit==0.7.2

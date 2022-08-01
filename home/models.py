@@ -2,7 +2,6 @@ from email.policy import default
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User 
-from django.contrib.auth.admin import UserAdmin
 
 # Create your models here.
 # ex: services, jobs, product  etc
@@ -30,6 +29,7 @@ class CategorieItem(models.Model):
 
 # ex: typing 10 page, pen , book , copy, etc
 class ItemModel(models.Model):
+    product_id = models.AutoField
     category = models.ForeignKey(Categorie, on_delete=models.CASCADE)
     categoryItem = models.ForeignKey(CategorieItem, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True )

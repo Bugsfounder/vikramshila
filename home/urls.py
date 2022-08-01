@@ -9,4 +9,8 @@ urlpatterns = [
     path('item/', views.item, name="contact"),
     path('search/', views.search, name="search"),
     path('delete/', views.delete, name="delete"),
+    path("tracker/", views.tracker, name="TrackingStatus"),
+    path("products/<int:myid>", views.productView, name="ProductView"),
+    path("checkout/", views.checkout, name="Checkout"),
+    path("handlerequest/", views.handlerequest, name="HandleRequest"),
 ]

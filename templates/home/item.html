@@ -3,95 +3,102 @@
 {% load thumbnail %}
 {% block body %}
 <main class="container my-3" style="height:100%;">
-
-    {% if allItemsRelatedToCat|length %}
-    
+    <div style="margin-top: 85px; height:100%;">
+        <h1 class="text-center m-3">All Available {{category}} related to {{title}}</h1>
+        <p class="text-center m-3">{{desc}}</p>
+        <hr>
+        {% if allItemsRelatedToCat|length %}
         {% if isProduct %}
-            <div style="margin-top: 85px; height:100%;">
-                <h1 class="my-5">{{category}} related to {{title}}</h1>
-                    {% for relatedItem in allItemsRelatedToCat %}
-                        <form action="/buy/" method="post" class="col-md-6">
+                    {% for item in allItemsRelatedToCat %}
+                        <div class="col-md-6">
                             {% csrf_token %}
                             <input type="hidden" name="category" value="{{category}}">
-                            <input type="hidden" name="categoryItem" value="{{relatedItem.title}}">
-                            <input type="hidden" name="description" value="{{relatedItem.description}}">
+                            <input type="hidden" name="categoryItem" value="{{item.title}}">
+                            <input type="hidden" name="description" value="{{item.description}}">
                             <div class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                 <div class="col-md-4 d-none d-lg-block">
-                                    {% thumbnail relatedItem.image "200x200" as im %}
+                                    {% thumbnail item.image "200x200" as im %}
                                     <img src="{{ im.url }}" style="width: 100%;height: 100%;">
                                     {% endthumbnail %}
                                 </div>
                                 <div class="col p-4 d-flex flex-column position-static">
                                     <strong class="d-inline-block mb-2 text-success">{{category}} - {{title}}</strong>
-                                    <h3 class="mb-0">{{relatedItem.title}}</h3>
-                                    <p class="card-text mb-auto">{{relatedItem.description|slice:":100"}}...
+                                    <h3 class="mb-0">{{item.title}}</h3>
+                                    <p class="card-text mb-auto">{{item.description|slice:":100"}}...
                                     </p>
-                                    <p class="card-text"><small class=" text-primary">Last Update at {{relatedItem.datetime}}</small></p>
+                                    <p class="card-text"><small class=" text-primary">Last Update at {{item.datetime}}</small></p>
                                     <p>
-                                        <span class="text-center text-danger">Amount: {{relatedItem.price}} /-</span>
+                                        <span class="a-offscreen" style="font-size: 2rem;color: black;font-weight: bold;">₹{{item.price}}.00</span>
+
                                     </p>
-                                    <p>
-                                        <a class="btn btn-outline-success mt-2">Contact: {{relatedItem.contact}} {{user.get_username }}</a>
-                                        <button class="btn btn-outline-danger mt-2 mx-2">Buy Now</button>
+                                    <p class="d-flex">
+                                        <a class="btn btn-outline-success mt-2">Contact: {{item.contact}} {{user.get_username }}</a>
+                                        <a href="/products/{{item.id}}"><button id="qv{{item.id}}" class="btn btn-outline-danger mt-2 mx-2">Quick View</button></a>
                                     </p>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     {% endfor %}
             </div>
         {% else %}
             <div style="margin-top: 85px; height:100%;">
-                <h1 class="my-5">{{category}} related to {{title}}</h1>
-                    {% for relatedItem in allItemsRelatedToCat %}
-                            <form class="card mb-3" method="post", action="/buy/">
+                    {% for item in allItemsRelatedToCat %}
+                            <div class="card mb-3" >
                                 {% csrf_token %}
                                 <div>
                                     <div>
                                         <div class="card-body">
-                                            <h3 class="card-title text-success">{{relatedItem.title}}</h3>
-                                            <p class="card-text">{{relatedItem.description}}</p>
-                                            <p class="card-text"><small class=" text-primary">Last Update at {{relatedItem.datetime}}</small></p>
+                                            <strong class="d-inline-block mb-2 text-primary">{{category}} - {{title}}</strong>
+                                            <h3 class="card-title text-success">{{item.title}}</h3>
+                                            <p class="card-text">{{item.description}}</p>
+                                            <p class="card-text"><small class=" text-primary">Last Update at {{item.datetime}}</small></p>
+                                            <span class="a-offscreen" style="font-size: 2rem;color: black;font-weight: bold;">₹{{item.price}}.00</span>
+
                                         </div>
                                         <p>
-                                            <a class="btn btn-outline-success mt-2 mx-3">Contact: {{relatedItem.contact}} {{user.get_username }}</a>
-                                            <button class="btn btn-outline-danger mt-2 mx-2">Taking It</button>
-                                            <span class="text-center text-danger">Amount: {{relatedItem.price}} /-</span>
+                                            <a class="btn btn-outline-success mt-2 mx-3">Contact: {{item.contact}} {{user.get_username }}</a>
+                                            <a href="/products/{{item.id}}"><button id="qv{{item.id}}" class="btn btn-danger mt-2 mx-2">Quick View</button></a>
                                         </p>
                                     </div> 
                                 </div>
-                            </form>
+                            </div>
                     {% endfor %}
             </div>
         {% endif %} 
 
     {% else %}
-        <h1 class="my-5 text-primary">No {{category}} Available related to {{title}}</h1>
+        <h1 class="text-center m-3">No Available {{category}} related to {{title}} for Now</h1>
     {% endif %}
 
     <hr class="mt-5">
         
     <div style="height:100%;">
-        <h1 class="my-5">All Available {{category}}</h1>
+        <h1 class="my-5">Other Available {{category}}</h1>
         {% for item in allItems %}
-                <form class="card mb-3" method="post", action="/buy/">
+                <div class="card mb-3" >
                     {% csrf_token %}
                     <div>
                         <div>
                             <div class="card-body">
+                                <strong class="d-inline-block mb-2 text-primary">{{item.category.title}} - {{item.categoryItem.title}}</strong>
                                 <h3 class="card-title text-success">{{item.title}}</h3>
                                 <p class="card-text">{{item.description}}</p>
                                 <p class="card-text"><small class=" text-primary">Last Update at {{item.datetime}}</small></p>
+                                <span class="a-offscreen" style="font-size: 2rem;color: black;font-weight: bold;">₹{{item.price}}.00</span>
                             </div>
                             <p>
                                 <a class="btn btn-outline-success mt-2 mx-3">Contact: {{item.contact}}</a>
-                                    <button class="btn btn-outline-primary mt-2 mx-2">Checkout</button>
-                                <span class="text-center text-danger">Amount: {{item.price}} /-</span>
+                                <a href="/products/{{item.id}}"><button id="qv{{item.id}}" class="btn btn-danger mt-2 mx-2">Quick View</button></a>
                             </p>
                         </div> 
                     </div>
-                </form>
+                </div>
         {% endfor %}
     </div>
 
 </main>
+{% endblock %}
+
+{% block script %}
+
 {% endblock %}
