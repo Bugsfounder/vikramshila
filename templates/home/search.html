@@ -5,7 +5,7 @@
     <div style="margin-top: 85px; height:100%;">
         <h1 class="my-5">{{params.msg}}</h1>
         {% for result in results %}
-                <form class="card mb-3" action="/{{result.slug}}/" method="post">
+                <div class="card mb-3">
                     {% csrf_token %}
                     <div>
                         <div>
@@ -15,11 +15,11 @@
                                 <p class="card-text"><small class=" text-primary">Last Update at {{result.datetime}}</small></p>
                             </div>
                             <p>
-                                <button class="btn btn-success mt-2 mx-3">Explore »</button>
+                                <button class="btn btn-outline-success mt-2 mx-3">Contact: {{result.contact}}</button>
                             </p>
                         </div> 
                      </div>
-                </form>
+                </div>
         {% endfor %}
     </div>
 </main>

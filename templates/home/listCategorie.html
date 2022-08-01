@@ -9,7 +9,7 @@ Available {{category}} - Vikramshila
 
 <main class="container my-3" style="height:100vh;">
     <div style="margin-top: 85px; height:100%;">
-        <h1 class="text-center m-3">All Available {{category}}</h1>
+        <h1 class="text-center m-3">All Available {{category_}}</h1>
         <p class="text-center m-3">{{desc}}</p>
         <hr>
         {% if allItems|length %}
@@ -17,11 +17,12 @@ Available {{category}} - Vikramshila
             {% for category in allItems %}
             <form action="/{{ category.slug }}/" method="post" class="col-md-6">
                 {% csrf_token %}
-                <input type="hidden" name="category" value="{{category.title}}">
-                <div
-                    class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <input type="hidden" name="category" value="{{category_}}">
+                <input type="hidden" name="categoryItem" value="{{category.title}}">
+                <input type="hidden" name="description" value="{{category.description}}">
+                <div class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                     <div class="col p-4 d-flex flex-column position-static">
-                        <strong class="d-inline-block mb-2 text-success">vikramshila</strong>
+                        <strong class="d-inline-block mb-2 text-success">{{category_}} - {{category.title}}</strong>
                         <h3 class="mb-0">{{category.title}}</h3>
                         <div class="mb-1 text-muted">{{category.datetime}}</div>
                         <p class="card-text mb-auto">{{category.description|slice:":100"}}...

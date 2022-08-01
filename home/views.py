@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from django.contrib import messages
-from .models import Contact, Categorie, CategorieItem, Item
+from .models import Contact, Categorie, CategorieItem, ItemModel
 from math import ceil
 from django.db.models import Q
 
@@ -11,6 +11,12 @@ from django.db.models import Q
 def index(request):
     allCategories = Categorie.objects.all()
     return render(request, "home/index.html",{"categories":allCategories})
+
+def about(request):
+    return render(request, "home/aboutauthor.html")
+
+def website(request):
+    return render(request, "home/aboutwebsite.html")
 
 def contact(request):
     if request.method=="POST":
@@ -27,30 +33,36 @@ def contact(request):
             contact=Contact(name=name, email=email, phone=phone, description=description)
             contact.save()
             messages.success(request, "Your message has been successfully sent. we reply you as soon as possible")
-    return render(request, "contact/contact.html")
-
-def about(request):
-    return render(request, "about/aboutauthor.html")
-
-def website(request):
-    return render(request, "about/aboutwebsite.html")
+    return render(request, "home/contact.html")
 
 
 def listCategory(request):
     category = request.POST['category']
     desc = request.POST['description']
     allItems = CategorieItem.objects.filter(category=category)
-    return render(request, "listCategorie.html", {"allItems":allItems, "category":category,"desc":desc})
-
+    return render(request, "home/listCategorie.html", {"allItems":allItems, "category_":category,"desc":desc})
 
 def item(request):
-    return HttpResponse("This is item page of product")
-
+    if request.method=="POST":
+        category = request.POST['category']
+        categoryItem = request.POST['categoryItem']
+        desc = request.POST['description']
+        isProduct = category=="Products"
+        allItems = ItemModel.objects.all()
+        allItemsRelatedToCat = []
+        for item in allItems:
+            if (item.category.title == category )and( item.categoryItem.title==categoryItem):
+                allItemsRelatedToCat.append(item)
+        return render(request, "home/item.html", {"allItems":allItems,"allItemsRelatedToCat":allItemsRelatedToCat, "title":categoryItem, "category":category,"desc":desc,"isProduct":isProduct})
 
 def search(request):
     query=request.POST['query']
-    results = Item.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+    results = ItemModel.objects.filter(Q(title__icontains=query)|Q(description__icontains=query))
+    params = {'msg':"All Search Results" , "len":len(results)}
     if len(results)==0 or len(query)<4:
         params={'msg':"Please make sure to enter relevant search query"}
-    params = {'msg':"All Search Results" , "len":len(results)}
     return render(request, 'home/search.html', {"results":results,"params":params})
+
+
+def delete(request):
+    return HttpResponse("DELETING....")

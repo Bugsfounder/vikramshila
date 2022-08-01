@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load thumbnail %}
+{% block body %}
+<main class="container my-3" style="height:100%;">
+
+    {% if allItemsRelatedToCat|length %}
+    
+        {% if isProduct %}
+            <div style="margin-top: 85px; height:100%;">
+                <h1 class="my-5">{{category}} related to {{title}}</h1>
+                    {% for relatedItem in allItemsRelatedToCat %}
+                        <form action="/buy/" method="post" class="col-md-6">
+                            {% csrf_token %}
+                            <input type="hidden" name="category" value="{{category}}">
+                            <input type="hidden" name="categoryItem" value="{{relatedItem.title}}">
+                            <input type="hidden" name="description" value="{{relatedItem.description}}">
+                            <div class="my-3 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                <div class="col-md-4 d-none d-lg-block">
+                                    {% thumbnail relatedItem.image "200x200" as im %}
+                                    <img src="{{ im.url }}" style="width: 100%;height: 100%;">
+                                    {% endthumbnail %}
+                                </div>
+                                <div class="col p-4 d-flex flex-column position-static">
+                                    <strong class="d-inline-block mb-2 text-success">{{category}} - {{title}}</strong>
+                                    <h3 class="mb-0">{{relatedItem.title}}</h3>
+                                    <p class="card-text mb-auto">{{relatedItem.description|slice:":100"}}...
+                                    </p>
+                                    <p class="card-text"><small class=" text-primary">Last Update at {{relatedItem.datetime}}</small></p>
+                                    <p>
+                                        <span class="text-center text-danger">Amount: {{relatedItem.price}} /-</span>
+                                    </p>
+                                    <p>
+                                        <a class="btn btn-outline-success mt-2">Contact: {{relatedItem.contact}} {{user.get_username }}</a>
+                                        <button class="btn btn-outline-danger mt-2 mx-2">Buy Now</button>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    {% endfor %}
+            </div>
+        {% else %}
+            <div style="margin-top: 85px; height:100%;">
+                <h1 class="my-5">{{category}} related to {{title}}</h1>
+                    {% for relatedItem in allItemsRelatedToCat %}
+                            <form class="card mb-3" method="post", action="/buy/">
+                                {% csrf_token %}
+                                <div>
+                                    <div>
+                                        <div class="card-body">
+                                            <h3 class="card-title text-success">{{relatedItem.title}}</h3>
+                                            <p class="card-text">{{relatedItem.description}}</p>
+                                            <p class="card-text"><small class=" text-primary">Last Update at {{relatedItem.datetime}}</small></p>
+                                        </div>
+                                        <p>
+                                            <a class="btn btn-outline-success mt-2 mx-3">Contact: {{relatedItem.contact}} {{user.get_username }}</a>
+                                            <button class="btn btn-outline-danger mt-2 mx-2">Taking It</button>
+                                            <span class="text-center text-danger">Amount: {{relatedItem.price}} /-</span>
+                                        </p>
+                                    </div> 
+                                </div>
+                            </form>
+                    {% endfor %}
+            </div>
+        {% endif %} 
+
+    {% else %}
+        <h1 class="my-5 text-primary">No {{category}} Available related to {{title}}</h1>
+    {% endif %}
+
+    <hr class="mt-5">
+        
+    <div style="height:100%;">
+        <h1 class="my-5">All Available {{category}}</h1>
+        {% for item in allItems %}
+                <form class="card mb-3" method="post", action="/buy/">
+                    {% csrf_token %}
+                    <div>
+                        <div>
+                            <div class="card-body">
+                                <h3 class="card-title text-success">{{item.title}}</h3>
+                                <p class="card-text">{{item.description}}</p>
+                                <p class="card-text"><small class=" text-primary">Last Update at {{item.datetime}}</small></p>
+                            </div>
+                            <p>
+                                <a class="btn btn-outline-success mt-2 mx-3">Contact: {{item.contact}}</a>
+                                    <button class="btn btn-outline-primary mt-2 mx-2">Checkout</button>
+                                <span class="text-center text-danger">Amount: {{item.price}} /-</span>
+                            </p>
+                        </div> 
+                    </div>
+                </form>
+        {% endfor %}
+    </div>
+
+</main>
+{% endblock %}
